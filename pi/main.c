@@ -37,8 +37,13 @@ int main() {
             }
             memcpy(&humidity, buffer, sizeof(float));
 
-            printf("Temperature %.2f°C, Humidity: %.2f%%\n", temp, humidity);
-            fflush(stdout);
+            //Write to json file (overwrites old data)
+            FILE *file = fopen("/home/pi/sensorData.json", "w");
+
+            if (file != NULL) {
+                fprintf(file, "{\"temperature\": %.1f, \"humidity\": %.1f}", temp, humidity);
+                fclose(file);
+            }
         }
     }
 }
