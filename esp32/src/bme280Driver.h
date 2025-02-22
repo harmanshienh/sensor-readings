@@ -1,3 +1,6 @@
+#ifndef BME280_DRIVER_H
+#define BME280_DRIVER_H
+
 #include <driver/i2c.h>
 
 #define I2C_MASTER_SCL 22 //GPIO 22
@@ -45,7 +48,7 @@
 #define BME280_REG_RESET 0xE0
 #define BME280_REG_ID 0xD0
 
-static const char *TAG = "BME280";
+#define BME_TAG "BME280"
 
 typedef struct {
     uint16_t dig_T1; //Linear offset, subtract from ADC reading
@@ -59,27 +62,31 @@ typedef struct {
     int8_t dig_H6;
 } bme280_calib_data_t;
 
-int32_t t_fine;
+extern int32_t t_fine;
+extern float temp;
+extern float humidity;
 
 //Initialize ESP32 as I2C master
-static esp_err_t i2c_master_init(void);
+esp_err_t i2c_master_init(void);
 
-static esp_err_t bme280_init(void);
+esp_err_t bme280_init(void);
 
 //Write a byte of data to specified register
-static esp_err_t bme280_write_reg(uint8_t reg_addr, uint8_t data);
+esp_err_t bme280_write_reg(uint8_t reg_addr, uint8_t data);
 
 //Read data from a specified register
-static esp_err_t bme280_read_reg(uint8_t reg_addr, uint8_t *data, size_t len);
+esp_err_t bme280_read_reg(uint8_t reg_addr, uint8_t *data, size_t len);
 
 //Obtain 16-bit calibration values
 void bme280_calibrate_data(void);
 
 //Taken from datasheet
-static float bme280_compensate_temperature(uint32_t adc_t);
+float bme280_compensate_temperature(uint32_t adc_t);
 
 //Taken from datasheet
-static float bme280_compensate_humidity(int32_t adc_h);
+float bme280_compensate_humidity(int32_t adc_h);
 
-static float bme280_read_temperature(void);
-static float bme280_read_humidity(void);
+float bme280_read_temperature(void);
+float bme280_read_humidity(void);
+
+#endif
