@@ -38,7 +38,7 @@ int main() {
             memcpy(&humidity, buffer, sizeof(float));
 
             //Write to json file (overwrites old data)
-            FILE *file = fopen("/home/pi/sensorData.json", "w");
+            FILE *file = fopen("/home/raspberry/MagicMirror/modules/MMM-Sensor/sensorData.json", "w");
 
             if (file != NULL) {
                 fprintf(file, "{\"temperature\": %.1f, \"humidity\": %.1f}", temp, humidity);
