@@ -1,2 +1,5 @@
 pi/WiringPi
 .DS_Store
+pi/face_recognition/trainer.yml
+pi/face_recognition/labels.pickle
+pi/face_recognition/images/*

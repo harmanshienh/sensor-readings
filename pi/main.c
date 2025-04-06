@@ -11,7 +11,7 @@ int main() {
     char buffer[sizeof(float)];
 
     //Open UART serial port
-    if ((serial_port = serialOpen("/dev/serial0", 9600)) < 0) {
+    if ((serial_port = serialOpen("/dev/ttyS0", 9600)) < 0) {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno));
         return 1;
     }
@@ -38,7 +38,7 @@ int main() {
             memcpy(&humidity, buffer, sizeof(float));
 
             //Write to json file (overwrites old data)
-            FILE *file = fopen("/home/raspberry/MagicMirror/modules/MMM-Sensor/sensorData.json", "w");
+            FILE *file = fopen("/home/raspberry/Smart-Mirror/MagicMirror/modules/MMM-Sensor/sensorData.json", "w");
 
             if (file != NULL) {
                 fprintf(file, "{\"temperature\": %.1f, \"humidity\": %.1f}", temp, humidity);
